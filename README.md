@@ -1,4 +1,5 @@
 # TextBar-Recipes
+_This is a fork of [the original TextBar-Recipes](https://github.com/richie5um/TextBar-Recipes)_
 
 ## What?
 Recipes for TextBar app (www.richsomerfield.com/apps).
