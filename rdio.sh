@@ -7,4 +7,4 @@ IFS='|' read -r theArtist theName <<<"$(osascript <<<'tell application "Rdio"
           return theArtist & "|" & theName
         end tell
     end tell')" &&
-echo "<html><font face=\"helveticaneue-light\">$theArtist - $theName</font></html>"
+echo "$theArtist - $theName"
