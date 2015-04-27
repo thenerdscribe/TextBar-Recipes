@@ -31,6 +31,13 @@ Please submit pull-requests so that I can add your ideas/scripts.
 ### What is my battery charge?
     ioreg -n AppleSmartBattery -r | awk '$1~/Capacity/{c[$1]=$3} END{OFMT="%.2f%%"; max=c["\"MaxCapacity\""]; print (max>0? 100*c["\"CurrentCapacity\""]/max: "?")}'
 
+### Show CPU 'graph'
+    $HOME/scripts/CPUSpeed.sh
+> Download CPUSpeed.sh to your machine (to ~/scripts), and then add this to TextBar.
+> Note: This is fairly basic. It is very slow to use ```top``` to calculate the CPU, but, I've not come across a better way yet.
+
+![CPUSpeed](Screenshots/CPUSpeed.png)
+
 ### What song (and artist) is playing in iTunes?
     osascript -e 'if application "iTunes" is running then' -e 'tell application "iTunes"' -e 'if player state = playing then' -e '(get name of current track) & " – " & (get artist of current track)' -e 'else' -e 'return ""' -e 'end if' -e 'end tell' -e 'else' -e 'return ""' -e 'end if'
 > If iTunes is running and a song is playing, this will display the current song name and artist name.
@@ -38,7 +45,6 @@ Please submit pull-requests so that I can add your ideas/scripts.
 ### What song (and artist) is playing in Spotify?
     osascript -e 'if application "Spotify" is running then' -e 'tell application "Spotify"' -e 'if player state is playing then' -e 'return "♫ " & (artist of current track as string) & " - " & (name of current track as string)' -e 'end if' -e 'end tell' -e 'end if'
 > If Spotify is running and a song is playing, this will display the current song name and artist name.
-
 
 ### Weather
     curl -s 'http://api.openweathermap.org/data/2.5/weather?q=Manchester,UK&units=metric' | python -c 'import sys, json; data=json.load(sys.stdin); print("{} : {:.1f}°C".format(data["weather"][0]["main"], data["main"]["temp"]))'
@@ -76,7 +82,7 @@ Please submit pull-requests so that I can add your ideas/scripts.
 ![Battery](Screenshots/MouseKeyboardBattery.png)
 > Add these as two separate items.
 
-### Stackoverflow Reputation 
+### Stackoverflow Reputation
     json=$(curl -s http://stackoverflow.com/users/flair/22656.json) && echo $json | sed 's/,//g;s/^.*reputation...\([0-9]*\).*$/\1/'
 > (replace 22656 by your SO account number)
 
@@ -102,3 +108,19 @@ The HTML support is fairly limited, it supports text and images. The text can be
 
 ### Is my External drive mounted (with HTML Styled Text)?
     [ -d /Volumes/MyExtDrive ] && echo "<html><font face=\"helveticaneue-thin\"> MyExtDrive mounted</font></html>" || echo "<html><font face=\"helveticaneue-thin\">MyExtDrive <font color=red><b>not</b></font> mounted</font></html>"
+
+## Preferences
+> Requires v1.4.9 (or later)
+I'm working on a UI screen for preferences, but, until then you can set the Default Font/Font-Size, and Shell using ```defaults write```
+
+### How to set the default Font
+    defaults write com.RichSomerfield.TextBar DefaultFontName -string "HelveticaNeue-UltraLight"
+> Requires a restart of the TextBar app
+
+### How to set the default Font-Size
+    defaults write com.RichSomerfield.TextBar textBarPreferences.DefaultFontSize -int 10
+> Requires a restart of the TextBar app
+
+### How to set the default Shell
+    defaults write com.RichSomerfield.TextBar DefaultShell -string "/bin/sh"
+> Requires a restart of the TextBar app
